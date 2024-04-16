@@ -4,7 +4,8 @@ import { Buffer } from "node:buffer";
 
 // EDIT THIS FILE TO COMPLETE ASSIGNMENT QUESTION 1
 import { chromium } from "playwright";
-const csvConfig = mkConfig({ useKeysAsHeaders: true });
+
+const csvConfig = mkConfig({ useKeysAsHeaders: true, filename: 'top_10_y_articles' });
 
 
 async function saveHackerNewsArticles() {
@@ -37,7 +38,7 @@ async function saveHackerNewsArticles() {
   writeFile(filename, csvBuffer, (err) => {
     if (err) throw err;
     console.log("file saved: ", filename);
-  })
+  });
 
   // const articles = await page.$$eval('.storylink', (links) => {
   //   return links.slice(0, 10).map((link) => ({
