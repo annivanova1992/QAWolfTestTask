@@ -22,15 +22,18 @@ async function saveHackerNewsArticles() {
   // link = page.locator('.item-info-container ').get_by_role('link').get_attribute('href')
   const articleElements = await page.locator('.titleline > a').all();
   const articles = []; 
-  for (const article of articleElements) {
-    articles.push(await article.getAttribute('href'));
+  for (const item of articleElements) {
+    const article = { 
+      'order': 0, 
+      'title': await item.innerText(),
+      'link': await item.getAttribute('href') 
+    };
+    articles.push(article);
   }
 
-  let exportArticles = articles.map((a, index) => { return { 'order': index, 'title': a, 'link': a } });
+  console.log(articles);
 
-  console.log(exportArticles);
-
-  const csv = generateCsv(csvConfig)(exportArticles);
+  const csv = generateCsv(csvConfig)(articles);
   const filename = `${csvConfig.filename}.csv`;
   const csvBuffer = new Uint8Array(Buffer.from(asString(csv)));
 
